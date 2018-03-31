@@ -7,15 +7,27 @@ set(CMAKE_CXX_STANDARD 14)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # JsonCpp root directory
-set(JSONCPP_ROOT_DIR "C:/Program Files (x86)/jsoncpp")
+if (WIN32)
+    set(JSONCPP_ROOT_DIR "C:/Program Files (x86)/jsoncpp")
+elseif(UNIX)
+    set(JSONCPP_ROOT_DIR "...")
+endif ()
 
 # Find JsonCpp library
-find_package(JsonCpp)
+find_package(JsonCpp REQUIRED)
 
 message("   ROOT: " ${JSONCPP_ROOT_DIR})
 message("  FOUND: " ${JSONCPP_FOUND})
 message("INCLUDE: " ${JSONCPP_INCLUDE_DIR})
 message("LIBRARY: " ${JSONCPP_LIBRARY_RELEASE})
+
+if (WIN32)
+    add_definitions("-D_WINDOWS_")
+elseif(UNIX)
+    add_definitions("-D_LINUX_")
+endif ()
+
+
 
 include_directories(${JSONCPP_INCLUDE_DIR})
 add_executable(TODO main.cpp src/Task.cpp include/Task.h src/Board.cpp include/Board.h)
