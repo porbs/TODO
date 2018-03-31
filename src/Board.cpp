@@ -5,6 +5,7 @@
 #include "../include/Board.h"
 
 #include <fstream>
+#include <sstream>
 
 Board::Board(const std::string &name) : name(name) {}
 
@@ -57,12 +58,32 @@ void Board::removeTask(int taskId) {
 }
 
 void Board::save(const std::string &fileName) const {
-    // TODO: implementation
-    return;
+    std::ofstream file;
+    std::stringstream stream;
+    Json::StreamWriterBuilder builder;
+    Json::StreamWriter* writer = builder.newStreamWriter();
+
+    writer->write(this->toJson(), &stream);
+
+    file.open(fileName, std::ifstream::out);
+    file << stream.str() << std::endl;
+    file.close();
+
+    delete writer;
 }
 
-
 Board Board::load(const std::string &fileName) {
-    // TODO: implementation
-    return Board("");
+    std::ifstream file;
+    std::stringstream stream;
+
+    file.open(fileName, std::ifstream::in);
+    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    file.close();
+
+    Json::Value node;
+    Json::CharReaderBuilder builder;
+    Json::CharReader* reader = builder.newCharReader();
+
+    reader->parse(content.begin().base(), content.end().base(), &node, nullptr);
+    return  Board::fromJson(node);
 }
