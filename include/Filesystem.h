@@ -18,6 +18,7 @@ namespace filesystem{
 
     void deleteFile(const std::string &filePath);
     void createFolder(const std::string &folderPath);
+    bool isExistingPath(const std::string &path);
     std::vector<std::string> listFilesInFolder(const std::string &folderPath);
 }
 

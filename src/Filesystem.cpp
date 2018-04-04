@@ -7,7 +7,7 @@
 #include <iostream>
 
 #ifdef _WINDOWS_
-    #include <windows.h>
+#include <windows.h>
 #elif _LINUX_
 
 #endif
@@ -27,6 +27,15 @@ void filesystem::createFolder(const std::string &folderPath){
     if(!CreateDirectory(folderPath.c_str(), nullptr)){
         std::cerr << "Failed to create folder" << std::endl;
     }
+#elif _LINUX_
+
+#endif
+}
+
+bool filesystem::isExistingPath(const std::string &path){
+#ifdef _WINDOWS_
+//    return static_cast<bool>(PathFileExists(path.c_str()));
+    return GetFileAttributes(path.c_str()) != 0xFFFFFFFF;
 #elif _LINUX_
 
 #endif
