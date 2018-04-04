@@ -2,7 +2,7 @@
 // Created by Yevhenii Kubiuk on 3/31/2018.
 //
 
-#include "../include/Board.h"
+#include "Board.h"
 
 #include <fstream>
 #include <sstream>
