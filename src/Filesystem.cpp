@@ -8,6 +8,9 @@
 
 #ifdef _WINDOWS_
 #include <windows.h>
+#include <fileapi.h>
+#include <handleapi.h>
+
 #elif _LINUX_
 
 #endif
@@ -24,7 +27,7 @@ void filesystem::deleteFile(const std::string &filePath){
 
 void filesystem::createFolder(const std::string &folderPath){
 #ifdef _WINDOWS_
-    if(!CreateDirectory(folderPath.c_str(), nullptr)){
+    if(!CreateDirectory(folderPath.c_str(), nullptr) && ){
         std::cerr << "Failed to create folder" << std::endl;
     }
 #elif _LINUX_
