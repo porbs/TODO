@@ -23,7 +23,7 @@ void filesystem::deleteFile(const std::string &filePath){
         std::cerr << "Failed to delete file" << std::endl;
     }
 #elif _LINUX_
-    if(!unlink(filePath.c_str())){
+    if(unlink(filePath.c_str()) == -1){
         std::cerr << "Failed to delete file" << std::endl;
     }
 #endif
@@ -31,11 +31,11 @@ void filesystem::deleteFile(const std::string &filePath){
 
 void filesystem::createFolder(const std::string &folderPath){
 #ifdef _WINDOWS_
-    if(!CreateDirectory(folderPath.c_str(), nullptr) && ){
+    if(!CreateDirectory(folderPath.c_str(), nullptr)){
         std::cerr << "Failed to create folder" << std::endl;
     }
 #elif _LINUX_
-    if (!mkdir(folderPath.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)){
+    if (mkdir(folderPath.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1){
         std::cerr << "Failed to create folder" << std::endl;
     }
 #endif
