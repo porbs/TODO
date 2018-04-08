@@ -1,8 +1,5 @@
 #include <iostream>
 
-//#include "Board.h"
-//#include "Filesystem.h"
-
 #include "TodoControllers.h"
 
 int main() {
@@ -14,6 +11,7 @@ int main() {
     todo::removeBoard("Invalid board");
 
     for (auto &board: todo::getBoardsList()){
+        std::cout << "Altering <" << board.getName() << "> board" << std::endl;
         board.addTask(Task("Task 1", "Task description..."));
         todo::saveBoard(board);
     }

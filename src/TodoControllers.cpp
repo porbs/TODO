@@ -6,7 +6,9 @@
 #include "TodoControllers.h"
 
 void todo::createBoard(const std::string &name){
-    filesystem::createFolder(todo::STORAGE_PATH);
+    if(!filesystem::isExistingPath(todo::STORAGE_PATH)){
+        filesystem::createFolder(todo::STORAGE_PATH);
+    }
     Board board(name);
     if(!filesystem::isExistingPath(todo::STORAGE_PATH + filesystem::delimiter + board.getName())) {
         todo::saveBoard(board);
