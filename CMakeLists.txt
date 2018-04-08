@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.9)
 project(TODO)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -12,7 +12,7 @@ file(GLOB_RECURSE SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 if (WIN32)
     set(JSONCPP_ROOT_DIR "C:/Program Files (x86)/jsoncpp")
 elseif(UNIX)
-    set(JSONCPP_ROOT_DIR "...")
+    #set(JSONCPP_ROOT_DIR "/usr/local")
 endif ()
 
 # Find JsonCpp library

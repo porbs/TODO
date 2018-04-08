@@ -12,7 +12,9 @@
 #include <handleapi.h>
 
 #elif _LINUX_
-
+#include <sys/stat.h>
+#include <unistd.h>
+#include <dirent.h>
 #endif
 
 void filesystem::deleteFile(const std::string &filePath){
@@ -21,7 +23,9 @@ void filesystem::deleteFile(const std::string &filePath){
         std::cerr << "Failed to delete file" << std::endl;
     }
 #elif _LINUX_
-
+    if(!unlink(filePath.c_str())){
+        std::cerr << "Failed to delete file" << std::endl;
+    }
 #endif
 }
 
@@ -31,16 +35,17 @@ void filesystem::createFolder(const std::string &folderPath){
         std::cerr << "Failed to create folder" << std::endl;
     }
 #elif _LINUX_
-
+    if (!mkdir(folderPath.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)){
+        std::cerr << "Failed to create folder" << std::endl;
+    }
 #endif
 }
 
 bool filesystem::isExistingPath(const std::string &path){
 #ifdef _WINDOWS_
-//    return static_cast<bool>(PathFileExists(path.c_str()));
     return GetFileAttributes(path.c_str()) != 0xFFFFFFFF;
 #elif _LINUX_
-
+    return access(path.c_str(), F_OK) != -1;
 #endif
 }
 
@@ -64,7 +69,14 @@ std::vector<std::string> filesystem::listFilesInFolder(const std::string &folder
     }
     while (FindNextFile(hFind, &ffd) != 0);
 #elif _LINUX_
-
+    DIR* dirp = opendir(folderPath.c_str());
+    struct dirent * dp;
+    while ((dp = readdir(dirp)) != NULL) {
+        if (dp->d_name[0] != '.'){
+            result.push_back(dp->d_name);
+        }
+    }
+    closedir(dirp);
 #endif
     return result;
 }

@@ -8,7 +8,7 @@ FIND_PATH (JSONCPP_ROOT_DIR
 # Re-use the previous path:
 #NAMES jsoncpp json/json.h
 FIND_PATH (JSONCPP_INCLUDE_DIR
-        NAMES json/json.h
+        NAMES json json/json.h
         HINTS ${JSONCPP_ROOT_DIR}
         PATH_SUFFIXES include
         DOC "jsoncpp include directory")
